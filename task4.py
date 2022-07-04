@@ -1,18 +1,19 @@
-from itertools import product
+from itertools import combinations
 
 
-def bananas(s) -> set:
-    result = set()
-    p = list(product([0, 1], repeat=len(s)))
-    for i in range(len(p)):
-        curr = list(s)
-        for j in range(len(s)):
-            if not p[i][j]:
-                curr[j] = '-'
-        curr = ''.join(curr)
-        if curr.replace('-', '') == "banana":
-            result.add(curr)
-    return result
+def bananas(s):
+    goal = "banana"
+    res = set()
+
+    for var in combinations(enumerate(s), len(goal)):
+        var_word = ''.join([i[1] for i in var])
+        ans = list(s)
+        if var_word == goal:
+            for vc in enumerate(s):
+                if vc not in var:
+                    ans[vc[0]] = '-'
+            res.add(''.join(ans))
+    return res
 
 
 assert bananas("banann") == set()

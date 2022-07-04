@@ -2,19 +2,19 @@ from math import prod
 
 
 def count_find_num(primesL, limit):
-    res = []
     mn = prod(primesL)
-    for i in range(mn, limit+1):
-        n = i
-        for k in primesL:
-            while (n//mn) % k == 0:
-                n /= k
-        if n == mn:
-            res.append(i)
-    if not res:
-        return res
-    else:
-        return [len(res), max(res)]
+    if mn > limit:
+        return []
+    res = {mn}
+
+    for i in primesL:
+        for rn in res:
+            rn *= i
+            while rn <= limit:
+                res.add(rn)
+                rn *= i
+
+    return [len(res), max(res)]
 
 
 primesL = [2, 3]
